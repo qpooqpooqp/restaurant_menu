@@ -9,6 +9,7 @@ const port = 3000
 const exphbs = require('express-handlebars')
 const db = mongoose.connection
 const RestaurantList = require('./models/restaurant')
+const restaurant = require('./models/restaurant')
 
 db.on('error', () => {
   console.log('喔幹!連線失敗啦...')
@@ -42,11 +43,12 @@ app.post('/restaurant', (req, res) =>{
   .then(() => res.redirect('/'))
   .catch(error => console.log(error))
 })
-app.get('/restaurants/:restaurants_id', (req, res) => {
-  const restaurants = restaurantList.results.find(
-    restaurants => restaurants.id.toString() === req.params.restaurants_id
-  )
-  res.render('show', { restaurants: restaurants })
+app.get('/restaurants/:id', (req, res) => {
+  const id = req.params.id
+  return RestaurantList.findById(id)
+  .lean()
+  .then((restaurant) => res.render('show', { restaurant }))
+  .catch(error => console.log(error))
 })
 
 app.get('/search', (req, res) => {
