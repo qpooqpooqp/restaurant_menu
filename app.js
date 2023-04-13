@@ -18,8 +18,8 @@ db.once('open', () => {
 })
 const restaurantList = require('./restaurant.json')
 
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
-app.set('view engine', 'handlebars')
+app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
+app.set('view engine', 'hbs')
 
 app.get('/', (req, res) => {
   res.render('index', { restaurants: restaurantList.results })
