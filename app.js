@@ -8,6 +8,7 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
 const port = 3000
 const exphbs = require('express-handlebars')
 const db = mongoose.connection
+const RestaurantList = require('./models/restaurant')
 
 db.on('error', () => {
   console.log('喔幹!連線失敗啦...')
@@ -16,13 +17,17 @@ db.on('error', () => {
 db.once('open', () => {
   console.log('唷呼~連線成功!')
 })
-const restaurantList = require('./restaurant.json')
 
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
 
+app.use(express.urlencoded({ extends: true }))
+
 app.get('/', (req, res) => {
-  res.render('index', { restaurants: restaurantList.results })
+  RestaurantList.find()
+    .lean()
+    .then(restaurants => res.render('index', {restaurants}))
+    .catch(error => console.error(error))  
 })
 
 app.get('/restaurants/:restaurants_id', (req, res) => {
