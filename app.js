@@ -30,6 +30,18 @@ app.get('/', (req, res) => {
     .catch(error => console.error(error))  
 })
 
+app.get('/restaurants/new', (req,res) => {
+  return res.render('new')
+})
+
+app.post('/restaurant', (req, res) =>{
+  // const newRestaurant = req.body
+  // return RestaurantList.create({ newRestaurant })
+  const restaurant = new RestaurantList({newRestaurant})
+  return restaurant.save()
+  .then(() => res.redirect('/'))
+  .catch(error => console.log(error))
+})
 app.get('/restaurants/:restaurants_id', (req, res) => {
   const restaurants = restaurantList.results.find(
     restaurants => restaurants.id.toString() === req.params.restaurants_id
