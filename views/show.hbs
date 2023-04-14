@@ -1,4 +1,4 @@
-
+<script src="https://kit.fontawesome.com/3cfc14f63a.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="/stylesheets/show.css">
 <h1 class="mb-1 restaurant-show-title">{{restaurant.name}}</h1>
 <div class="container">
@@ -32,10 +32,15 @@
         {{restaurant.phone}}
       </p>
 
-      <p class="mb-5">
+      <p class="mb-2">
         {{restaurant.description}}
       </p>
-
+      <p class="mb-5"><a href="/restaurants/{{ restaurant._id }}/edit"><button type="button" class="btn btn-outline-secondary">
+        <i class="fa-solid fa-pen"></i>
+      </button></a>
+      <a href="/"><button type="button" class="btn btn-outline-secondary">
+        返回
+      </button></a></p>
       <img class="rounded mx-auto d-block mb-4 w-100" src="{{restaurant.image}}" alt="{{restaurant.name}}" style="max-width: 600px;">
     </div>
   </div>
