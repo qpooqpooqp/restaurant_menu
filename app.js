@@ -65,6 +65,7 @@ app.get('/restaurants/:id/edit', (req, res) => {
 app.post('/restaurants/:id/edit', (req, res) => {
   const id = req.params.id
   const data = req.body
+  ":id"
   // modify restaurant, and save to data
   return RestaurantList.findById(id)
     .then(restaurant => {
@@ -87,11 +88,17 @@ app.post('/restaurants/:id/edit', (req, res) => {
     })
 
 })
-
+app.post('/restaurants/:id/delete', (req, res) =>{
+  const id = req.params.id
+  RestaurantList.findById(id)
+  .then(restaurant => restaurant.remove())
+  .then(() => res.redirect('/'))
+  .catch(error => console.log(error))
+})
 app.get('/search', (req, res) => {
   const keyword = req.query.keyword
   function search(){
-    return restaurantList.results.filter(restaurant => restaurant.name.toLowerCase().includes(keyword.toLowerCase()) || restaurant.name_en.toLowerCase().includes(keyword.toLowerCase()) || restaurant.category.toLowerCase().includes(keyword.toLowerCase())
+    return RestaurantList.results.filter(restaurant => restaurant.name.toLowerCase().includes(keyword.toLowerCase()) || restaurant.name_en.toLowerCase().includes(keyword.toLowerCase()) || restaurant.category.toLowerCase().includes(keyword.toLowerCase())
       )
   }
   const restaurants = search()
