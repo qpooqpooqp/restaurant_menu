@@ -10,6 +10,7 @@ const exphbs = require('express-handlebars')
 const db = mongoose.connection
 const RestaurantList = require('./models/restaurant')
 const bodyParser = require('body-parser')
+const restaurant = require('./models/restaurant')
 db.on('error', () => {
   console.log('喔幹!連線失敗啦...')
 })
@@ -96,13 +97,28 @@ app.post('/restaurants/:id/delete', (req, res) =>{
   .catch(error => console.log(error))
 })
 app.get('/search', (req, res) => {
-  const keyword = req.query.keyword
-  function search(){
-    return RestaurantList.results.filter(restaurant => restaurant.name.toLowerCase().includes(keyword.toLowerCase()) || restaurant.name_en.toLowerCase().includes(keyword.toLowerCase()) || restaurant.category.toLowerCase().includes(keyword.toLowerCase())
-      )
-  }
-  const restaurants = search()
-  res.render('index', { restaurants: restaurants, keyword: keyword })
+  const keyword = req.query.keyword.trim()
+  const array = keyword.toLowerCase().split('')
+  const array2 = keyword.toLowerCase().split(' ')
+  RestaurantList.find()
+    .lean()
+    .then(restaurants => {
+      let resultsArr = []
+      resultsArr = restaurants.filter(restaurant =>{
+        const name = restaurant.name.toLowerCase()
+        const category = restaurant.category.toLowerCase()
+        const name_en = restaurant.name_en.toLowerCase()
+        const location = restaurant.location.toLowerCase()
+        return array2.some(keyword => 
+          name.includes(keyword)||
+          category.includes(keyword)||
+          name_en.includes(keyword)||
+          location.includes(keyword))
+      })
+      console.log(resultsArr)
+      res.render('index',{ restaurants: resultsArr, keyword })
+    })
+    .catch(error => console.log(error))
 })
 
 app.use(express.static('public'))
