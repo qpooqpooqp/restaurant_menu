@@ -3,14 +3,14 @@ const mongoose = require('mongoose')
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
-const app = express()
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+const app = express()
 const port = 3000
 const exphbs = require('express-handlebars')
-const db = mongoose.connection
 const RestaurantList = require('./models/restaurant')
 const bodyParser = require('body-parser')
-const restaurant = require('./models/restaurant')
+const methodOverride = require('method-override')
+const db = mongoose.connection
 db.on('error', () => {
   console.log('喔幹!連線失敗啦...')
 })
@@ -22,8 +22,9 @@ db.once('open', () => {
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
 
-
+app.use(methodOverride('_method'))
 app.use(bodyParser.urlencoded({ extended: true }))
+
 app.get('/', (req, res) => {
   RestaurantList.find()
     .lean()
@@ -63,7 +64,7 @@ app.get('/restaurants/:id/edit', (req, res) => {
     .catch(error => console.log(error))
 })
 
-app.post('/restaurants/:id/edit', (req, res) => {
+app.put('/restaurants/:id', (req, res) => {
   const id = req.params.id
   const data = req.body
   ":id"
@@ -89,7 +90,7 @@ app.post('/restaurants/:id/edit', (req, res) => {
     })
 
 })
-app.post('/restaurants/:id/delete', (req, res) =>{
+app.delete('/restaurants/:id', (req, res) =>{
   const id = req.params.id
   RestaurantList.findById(id)
   .then(restaurant => restaurant.remove())

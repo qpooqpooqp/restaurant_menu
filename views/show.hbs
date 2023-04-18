@@ -35,11 +35,11 @@
       <p class="mb-2">
         {{restaurant.description}}
       </p>
-      <form action="/restaurants/{{restaurant._id}}/delete" method="POST" style="inline"><button type="submit" class="btn btn-outline-danger"><i class="fa-sharp fa-solid fa-trash"></i></button>
+      <form action="/restaurants/{{restaurant._id}}?_method=DELETE" method="POST" style="inline"><button type="submit" class="btn btn-outline-danger"><i class="fa-sharp fa-solid fa-trash"></i></button>
         <a href="/restaurants/{{ restaurant._id }}/edit"><button type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-pen"></i></button></a>
       <a href="/"><button type="button" class="btn btn-outline-secondary">返回</button></a>
       </form>
-      <img class="rounded mx-auto d-block mb-4 w-100" src="{{restaurant.image}}" alt="{{restaurant.name}}" style="max-width: 600px;">
+      <img class="rounded mx-auto d-block mb-4 mt-4 w-100" src="{{restaurant.image}}" alt="{{restaurant.name}}" style="max-width: 600px;">
     </div>
   </div>
 </div>

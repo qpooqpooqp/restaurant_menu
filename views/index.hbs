@@ -40,15 +40,13 @@
                   {{this.rating}}
                   <i class="fas fa-star fa-xs"></i>
                 </span>
-                <div class="container mt-1 p-0">
-                  <a href="/restaurants/{{this._id}}/edit"><button class="btn btn-primary btn-sm">Edit</button></a>
-                  <a href="/restaurants/{{this._id}}"><button class="btn btn-primary btn-sm">Details</button></a>
-
-                  <form action="/restaurants/{{this._id}}/delete" method="POST" style="display: inline;">
-                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                  </form>
-                </div>
               </div>
+              <form action="/restaurants/{{this._id}}?_method=DELETE" method="POST" style="inline"><button type="submit"
+                  class="btn btn-outline-danger"><i class="fa-sharp fa-solid fa-trash"></i></button>
+                <a href="/restaurants/{{ this._id }}/edit"><button type="button" class="btn btn-outline-secondary"><i
+                      class="fa-solid fa-pen"></i></button></a>
+                <a href="/restaurants/{{this._id}}"><button type="button" class="btn btn-outline-secondary">詳情</button></a>
+              </form>
             </div>
           </a>
         </div>
