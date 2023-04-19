@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="/stylesheets/index.css">
 <script src="https://kit.fontawesome.com/3cfc14f63a.js" crossorigin="anonymous"></script>
 <!-- search bar -->
-<div class="container search-bar">
+<div class="container search-bar d-flex bd-highlight mb-3">
   <div class="search-bar-outer">
     <div class="search-bar-inner">
       <form action="/search">
@@ -10,11 +10,24 @@
           <input type="text" name="keyword" class="form-control" placeholder="輸入餐廳、分類" aria-label="Restaurant Name..."
             value="{{keyword}}" aria-describedby="search-button">
           <div class="input-group-append">
-            <button class="btn btn-major" type="submit" id="search-button"><i class="fas fa-search"></i></button>
-            <a href="/restaurants/new" class="btn btn-danger"><i class="fas fa-plus"></i></a>
+            <button class="btn btn-major" type="submit" id="search-button"><i class="fas fa-search"></i></button>            
           </div>                  
         </div>
       </form>      
+    </div>
+  </div>
+  <div class="search-bar-outer ms-auto">
+    <div class="search-bar-inner">
+      <form action="/search">
+        <h4 class="mb-2">餐廳排序：</h4>
+        <select class="form-select form-select-sm" aria-label=".form-select-sm">
+          <option selected>請選擇</option>
+          <option value="1">A → Z</option>
+          <option value="2">Z → A</option>
+          <option value="3">類別</option>
+          <option value="4">地區</option>          
+        </select>
+      </form>
     </div>
   </div>
 </div>

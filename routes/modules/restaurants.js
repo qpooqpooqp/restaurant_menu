@@ -28,7 +28,6 @@ router.get('/:id', (req, res) => {
 
 router.get('/:id/edit', (req, res) => {
   const id = req.params.id
-
   return RestaurantList.findById(id)
     .lean()
     .then((restaurant) => res.render('edit', { restaurant }))
@@ -38,8 +37,7 @@ router.get('/:id/edit', (req, res) => {
 router.put('/:id', (req, res) => {
   const id = req.params.id
   const data = req.body
-  ":id"
-  // modify restaurant, and save to data
+    // modify restaurant, and save to data
   return RestaurantList.findById(id)
     .then(restaurant => {
       restaurant.name = data.name,
@@ -68,31 +66,5 @@ router.delete('/:id', (req, res) => {
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
-router.get('/search', (req, res) => {
-  const keyword = req.query.keyword.trim()
-  const array = keyword.toLowerCase().split('')
-  const array2 = keyword.toLowerCase().split(' ')
-  RestaurantList.find()
-    .lean()
-    .then(restaurants => {
-      let resultsArr = []
-      resultsArr = restaurants.filter(restaurant => {
-        const name = restaurant.name.toLowerCase()
-        const category = restaurant.category.toLowerCase()
-        const name_en = restaurant.name_en.toLowerCase()
-        const location = restaurant.location.toLowerCase()
-        return array2.some(keyword =>
-          name.includes(keyword) ||
-          category.includes(keyword) ||
-          name_en.includes(keyword) ||
-          location.includes(keyword))
-      })
-      console.log(resultsArr)
-      res.render('index', { restaurants: resultsArr, keyword })
-    })
-    .catch(error => console.log(error))
-})
-
-
 
 module.exports = router

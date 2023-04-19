@@ -21,8 +21,8 @@ header {
 }
 
 .search-bar .search-bar-outer {
-  margin: 0 auto;
-  max-width: 680px;
+  margin: 0;
+  width: 300px;
   background-color: #fce2cf;
   border-radius: 8px;
   padding: 20px 30px;
