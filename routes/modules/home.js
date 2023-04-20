@@ -28,8 +28,7 @@ router.get('/search', (req, res) => {
           category.includes(keyword) ||
           name_en.includes(keyword) ||
           location.includes(keyword))
-      })
-      console.log(resultsArr)
+      })      
       res.render('index', { restaurants: resultsArr, keyword })
     })
     .catch(error => console.log(error))
