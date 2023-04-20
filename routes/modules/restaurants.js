@@ -18,6 +18,60 @@ router.get('/new', (req, res) => {
   return res.render('new')
 })
 
+router.get('/search', (req, res) => {
+  const keyword = req.query.keyword.trim()
+  const array = keyword.toLowerCase().split('')
+  const array2 = keyword.toLowerCase().split(' ')
+  RestaurantList.find()
+    .lean()
+    .then(restaurants => {
+      let resultsArr = []
+      resultsArr = restaurants.filter(restaurant => {
+        const name = restaurant.name.toLowerCase()
+        const category = restaurant.category.toLowerCase()
+        const name_en = restaurant.name_en.toLowerCase()
+        const location = restaurant.location.toLowerCase()
+        return array2.some(keyword =>
+          name.includes(keyword) ||
+          category.includes(keyword) ||
+          name_en.includes(keyword) ||
+          location.includes(keyword))
+      })
+      res.render('index', { restaurants: resultsArr, keyword })
+    })
+    .catch(error => console.log(error))
+})
+
+router.get('/AtoZ', (req, res) => {
+  RestaurantList.find()
+    .lean()
+    .sort({ name: 'asc' })
+    .then(restaurants => res.render('index', { restaurants }))
+    .catch(error => console.error(error))
+})
+
+router.get('/ZtoA', (req, res) => {
+  RestaurantList.find()
+    .lean()
+    .sort({ name: 'desc' })
+    .then(restaurants => res.render('index', { restaurants }))
+    .catch(error => console.error(error))
+})
+router.get('/category', (req, res) => {
+  RestaurantList.find()
+    .lean()
+    .sort({ category: 'asc' })
+    .then(restaurants => res.render('index', { restaurants }))
+    .catch(error => console.error(error))
+})
+router.get('/CCC', (req, res) => {
+  RestaurantList.find()
+    .lean()
+    .sort({ location: 'asc' })
+    .then(restaurants => res.render('index', { restaurants }))
+    .catch(error => console.error(error))
+})
+
 router.get('/:id', (req, res) => {
   const id = req.params.id
   return RestaurantList.findById(id)
@@ -66,5 +120,7 @@ router.delete('/:id', (req, res) => {
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
+
+
 
 module.exports = router
