@@ -5,6 +5,7 @@ const RestaurantList = require('../../models/restaurant')
 
 router.post('/', (req, res) => {
   const newRestaurant = req.body
+  // console.log(req.body)
   // console.log(newRestaurant)
   return RestaurantList.create(newRestaurant)
     // const restaurant = new RestaurantList({ newRestaurant })
@@ -64,7 +65,7 @@ router.get('/category', (req, res) => {
     .then(restaurants => res.render('index', { restaurants }))
     .catch(error => console.error(error))
 })
-router.get('/CCC', (req, res) => {
+router.get('/location', (req, res) => {
   RestaurantList.find()
     .lean()
     .sort({ location: 'asc' })
