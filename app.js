@@ -18,13 +18,21 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }))
-// 載入設定檔，要寫在 express-session 以後
-const usePassport = require('./config/passport')
-// 呼叫 Passport 函式並傳入 app，這條要寫在路由之前
-usePassport(app)
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
+
+const usePassport = require('./config/passport')
+
+usePassport(app)
+
+app.use((req, res, next) => {
+  // 你可以在這裡 console.log(req.user) 等資訊來觀察
+  res.locals.isAuthenticated = req.isAuthenticated()
+  res.locals.user = req.user
+  next()
+})
+
 app.use (routes)
 
 app.use(express.static('public'))
