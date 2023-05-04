@@ -1,7 +1,9 @@
+<link rel="stylesheet" href="https://bootswatch.com/5/vapor/bootstrap.min.css">
 <div class="row mt-5">
   <div class="col-md-6 m-auto">
     <div class="card card-body">
       <h1 class="text-center mt-3">Register</h1>
+      {{> message}}
       <form action="/users/register" method="POST">
         <div class="mb-3">
           <label for="name" class="mb-2">Name</label>
