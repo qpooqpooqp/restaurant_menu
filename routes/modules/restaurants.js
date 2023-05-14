@@ -5,13 +5,9 @@ const RestaurantList = require('../../models/restaurant')
 
 router.post('/', (req, res) => {
   const userId = req.user._id
-  const newRestaurant = req.body
-  // console.log(req.body)
-  // console.log(newRestaurant)
-  return RestaurantList.create(newRestaurant, userId)
-    // const restaurant = new RestaurantList({ newRestaurant })
-    // return restaurant.save()
-    // RestaurantList.create(req.body)
+  const { name, name_en, category, rating, location, phone, description, image, google_map } = req.body
+  console.log(req.body)
+  return RestaurantList.create({ name, name_en, category, rating, location, phone, description, image, google_map, userId })
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
@@ -19,7 +15,7 @@ router.post('/', (req, res) => {
 router.get('/new', (req, res) => {
   return res.render('new')
 })
-//搜尋還沒做
+
 router.get('/search', (req, res) => {
   const userId = req.user._id
   const keyword = req.query.keyword.trim()
